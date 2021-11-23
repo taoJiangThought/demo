@@ -32,16 +32,10 @@ public class ToDoEventController {
      *  TODO 校验和入参数
      */
      @PostMapping
-    public Response addEvent(@RequestBody @Valid ToDoEvent event){
-         if (event.getEventName()==null||event.getEventName().length()==0){
-             return ResponseBuilder.createFailRes(ResponseCode.COMMON_PARAMS_ILLEGAL,"event name is blank","save failed");
-         }
-         if (event.getStatus()==null||(event.getStatus() != 0 && event.getStatus() != 1 )){
-             return ResponseBuilder.createFailRes(ResponseCode.COMMON_PARAMS_ILLEGAL,"event status value is wrong","save failed");
-         }
+    public String addEvent(@RequestBody @Valid ToDoEvent event){
+
          boolean b = toDoEvenService.addEvent(event);
-         String msg = b?"data save success":"data save failed";
-         return ResponseBuilder.createSuccessRes( msg);
+         return b?"data save success":"data save failed";
      }
 
 
@@ -49,21 +43,20 @@ public class ToDoEventController {
      * - 更新一个待办事项到完成状态
      */
     @PutMapping
-    public Response updateEventStatus(@RequestParam(value = "id") Long id ,@RequestParam("status") @Valid @Size(max = 1) Integer status){
+    public String updateEventStatus(@RequestParam(value = "id") Long id ,@RequestParam("status") @Valid @Size(max = 1) Integer status){
         boolean b = toDoEvenService.updateEventStatus(id, status);
-        String msg = b?"data update success":"update save failed";
-        return ResponseBuilder.createSuccessRes( msg);
+        return b?"data update success":"update data failed";
     }
 
     /**
      * - 删除一个待办事项
      */
     @DeleteMapping("/{id}")
-    public Response deleteEventById(@PathVariable long id){
+    public String deleteEventById(@PathVariable long id){
 
         boolean b = toDoEvenService.deleteEventById(id);
-        String msg = b?"data delete success":"update delte failed";
-        return ResponseBuilder.createSuccessRes( msg);
+
+        return b?"data delete success":"update delete failed";
     }
 
     /**
@@ -71,10 +64,10 @@ public class ToDoEventController {
      * - 获取所有的待办事项
      */
     @GetMapping
-    public Response getAllEvent(){
+    public List<ToDoEvent> getAllEvent(){
 
         List<ToDoEvent> allTodoEvent = toDoEvenService.getAllTodoEvent();
 
-        return ResponseBuilder.createSuccessRes(allTodoEvent);
+        return allTodoEvent;
     }
 }
