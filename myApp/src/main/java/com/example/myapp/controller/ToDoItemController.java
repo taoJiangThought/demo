@@ -2,11 +2,13 @@ package com.example.myapp.controller;
 
 import com.example.myapp.entity.TododItem;
 import com.example.myapp.service.ToDoItemService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,7 +34,16 @@ public class ToDoItemController {
        return toDoItemService.addTodoItem(tododItem);
      }
 
-
+    /**
+     *  - 创建待办事项
+     */
+    @GetMapping("/test")
+    public HashMap test(){
+        HashMap map = new HashMap();
+        map.put("id",1);
+        map.put("message","Hello World!!!");
+        return map;
+    }
     /**
      * - 更新一个待办事项到完成状态
      */
