@@ -1,13 +1,13 @@
 package com.example.myapp.service;
 
-import com.example.myapp.Entity.ToDoEvent;
+import com.example.myapp.entity.TododItem;
 
 import java.util.List;
 
 /**
  * @author jiangtaotao
  */
-public interface ToDoEventService {
+public interface ToDoItemService {
 
     /**
      * 创建待办事项
@@ -15,7 +15,7 @@ public interface ToDoEventService {
      * @param event
      * @return
      */
-    public boolean addEvent(ToDoEvent event);
+     TododItem addTodoItem(TododItem event);
 
 
     /**
@@ -23,9 +23,8 @@ public interface ToDoEventService {
      *
      * @param id
      * @param status
-     * @return
      */
-    public boolean updateEventStatus(Long id ,int status);
+     void updateTodoItemStatus(Long id , int status);
 
 
     /**
@@ -34,12 +33,12 @@ public interface ToDoEventService {
      * @param id
      * @return
      */
-    public boolean deleteEventById(long id);
+     void deleteTodoItemById(long id);
 
 
     /**
      * 获取所有的待办事项
      * @return
      */
-    public List<ToDoEvent> getAllTodoEvent();
+     List<TododItem> getAllTodoItem();
 }

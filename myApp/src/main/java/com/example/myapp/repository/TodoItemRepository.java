@@ -1,6 +1,6 @@
 package com.example.myapp.repository;
 
-import com.example.myapp.Entity.ToDoEvent;
+import com.example.myapp.entity.TododItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
  * @author jiangtaotao
  */
 @Repository
-public interface TodoEventRepository extends JpaRepository<ToDoEvent,Long> {
+public interface TodoItemRepository extends JpaRepository<TododItem,Long> {
     /**
      * 更新事件完成状态
      *

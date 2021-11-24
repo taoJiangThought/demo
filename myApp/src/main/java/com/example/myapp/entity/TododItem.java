@@ -1,6 +1,4 @@
-package com.example.myapp.Entity;
-
-import org.springframework.validation.annotation.Validated;
+package com.example.myapp.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -11,7 +9,7 @@ import javax.validation.constraints.*;
 @Entity
 @Table(name="todoEvent")
 
-public class ToDoEvent {
+public class TododItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
