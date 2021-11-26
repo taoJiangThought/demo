@@ -8,8 +8,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Table(name="todoEvent")
-
-public class TododItem {
+public class TodoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,7 +21,7 @@ public class TododItem {
 
     /** status 为0 表示 未完成  1 表示完成
      */
-    @Column(name = "status")
+    @Column(name = "status",nullable = false)
     @Max(value = 1)
     @NotNull
     private Integer status;

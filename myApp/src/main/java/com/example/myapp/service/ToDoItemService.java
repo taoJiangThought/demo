@@ -1,6 +1,7 @@
 package com.example.myapp.service;
 
-import com.example.myapp.entity.TododItem;
+import com.example.myapp.dto.TodoItemDto;
+import com.example.myapp.entity.TodoItem;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ToDoItemService {
      * @param event
      * @return
      */
-     TododItem addTodoItem(TododItem event);
+     TodoItemDto addTodoItem(TodoItemDto event);
 
 
     /**
@@ -23,8 +24,9 @@ public interface ToDoItemService {
      *
      * @param id
      * @param status
+     * @return  TodoItemDto
      */
-     void updateTodoItemStatus(Long id , int status);
+    TodoItemDto updateTodoItemStatus(Long id , int status);
 
 
     /**
@@ -40,5 +42,5 @@ public interface ToDoItemService {
      * 获取所有的待办事项
      * @return
      */
-     List<TododItem> getAllTodoItem();
+     List<TodoItemDto> getAllTodoItem();
 }

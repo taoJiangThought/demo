@@ -1,14 +1,10 @@
 package com.example.myapp.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.myapp.entity.TododItem;
-import org.junit.Assert;
+import com.example.myapp.entity.TodoItem;
 import org.junit.ClassRule;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -16,8 +12,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+
 
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -62,69 +57,53 @@ class TodoItemControllerIntegrationTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
     }
 
-    @Test
-    public void test_whenMockMVC_thenVerifyResponse() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/todoItem/test"))
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Hello World!!!"))
-                .andReturn();
-
-        Assert.assertEquals("application/json",
-                mvcResult.getResponse().getContentType());
-    }
 
     @Test
-    public void test_add_todoItem_whenMockMVC_thenVerifyResponse()throws Exception{
-        MvcResult mvcResult = this.mockMvc.perform(post("/todoItem").contentType(MediaType.APPLICATION_JSON_VALUE).content(
+    public void givenValidTodoItem_whenSaveTodoItem_thenSucceed()throws Exception{
+        MvcResult mvcResult = this.mockMvc.perform(post("/todoItems").contentType(MediaType.APPLICATION_JSON_VALUE).content(
                 "{\n" +
                         "  \"eventName\":\"test7\",\n" +
                         "  \"status\":0\n" +
-                        "}"))
-                .andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.id").isNumber()).andReturn();
-        Assert.assertEquals("application/json",
-                mvcResult.getResponse().getContentType());
+                        "}")).andExpect(status().isOk()).andExpect(jsonPath("$.id").isNumber()).andReturn();
     }
 
     @Test
-    public void test_get_todoItem_whenMockMVC_thenVerifyResponse()throws Exception{
-        MvcResult mvcResult = this.mockMvc.perform(get("/todoItem"))
-                .andDo(print()).andExpect(status().isOk()).andReturn();
-
-        Assert.assertEquals("application/json",
-                mvcResult.getResponse().getContentType());
+    public void whenGetAllTodoItems_thenSucceed()throws Exception{
+        MvcResult mvcResult = this.mockMvc.perform(get("/todoItems"))
+                .andExpect(status().isOk()).andReturn();
     }
 
 
     @Test
-    public  void test_update_todoItem_whenMockMVC_thenVerifyResponse() throws Exception{
+    public  void givenValidTodoItem_whenUpdateTodoItem_thenSucceed() throws Exception{
         //先创建一个todoItem
-        MvcResult addMvcResult = this.mockMvc.perform(post("/todoItem").contentType(MediaType.APPLICATION_JSON_VALUE).content(
+        MvcResult addMvcResult = this.mockMvc.perform(post("/todoItems").contentType(MediaType.APPLICATION_JSON_VALUE).content(
                         "{\n" +
                                 "  \"eventName\":\"test_update\",\n" +
                                 "  \"status\":0\n" +
                                 "}"))
-                .andDo(print()).andExpect(status().isOk()).andReturn();
+                .andExpect(status().isOk()).andReturn();
         String contentAsString = addMvcResult.getResponse().getContentAsString();
-        TododItem tododItem = JSONObject.parseObject(contentAsString, TododItem.class);
+        TodoItem todoItem = JSONObject.parseObject(contentAsString, TodoItem.class);
         //在更新
-        MvcResult mvcResult = this.mockMvc.perform(put("/todoItem?id={id}&status={status}",tododItem.getId(),1))
-                .andDo(print()).andExpect(status().isOk()).andReturn();
+        MvcResult mvcResult = this.mockMvc.perform(put("/todoItems?id={id}&status={status}",todoItem.getId(),1))
+               .andExpect(status().isOk()).andReturn();
     }
 
     @Test
-    public  void test_delete_todoItem_whenMockMVC_thenVerifyResponse() throws Exception{
+    public  void givenValidTodoItemId_whenDeleteTodoItem_thenSucceed() throws Exception{
         //先创建一个todoItem
-        MvcResult addMvcResult = this.mockMvc.perform(post("/todoItem").contentType(MediaType.APPLICATION_JSON_VALUE).content(
+        MvcResult addMvcResult = this.mockMvc.perform(post("/todoItems").contentType(MediaType.APPLICATION_JSON_VALUE).content(
                         "{\n" +
                                 "  \"eventName\":\"test_update\",\n" +
                                 "  \"status\":0\n" +
                                 "}"))
-                .andDo(print()).andExpect(status().isOk()).andReturn();
+                .andExpect(status().isOk()).andReturn();
         String contentAsString = addMvcResult.getResponse().getContentAsString();
-        TododItem tododItem = JSONObject.parseObject(contentAsString, TododItem.class);
+        TodoItem todoItem = JSONObject.parseObject(contentAsString, TodoItem.class);
         //删除
-        MvcResult mvcResult = this.mockMvc.perform(delete("/todoItem/{id}",tododItem.getId()))
-                .andDo(print()).andExpect(status().isOk()).andReturn();
+        MvcResult mvcResult = this.mockMvc.perform(delete("/todoItems/{id}", todoItem.getId()))
+                .andExpect(status().isOk()).andReturn();
     }
 
 }
