@@ -19,7 +19,7 @@ public class TodoItem {
     @NotEmpty
     private String eventName;
 
-    /** status 为0 表示 未完成  1 表示完成
+    /** status 0 : undo  1 : finished
      */
     @Column(name = "status",nullable = false)
     @Max(value = 1)

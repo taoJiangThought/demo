@@ -76,7 +76,7 @@ class TodoItemControllerIntegrationTest {
 
     @Test
     public  void givenValidTodoItem_whenUpdateTodoItem_thenSucceed() throws Exception{
-        //先创建一个todoItem
+        //create todoItem
         MvcResult addMvcResult = this.mockMvc.perform(post("/todoItems").contentType(MediaType.APPLICATION_JSON_VALUE).content(
                         "{\n" +
                                 "  \"eventName\":\"test_update\",\n" +
@@ -85,14 +85,14 @@ class TodoItemControllerIntegrationTest {
                 .andExpect(status().isOk()).andReturn();
         String contentAsString = addMvcResult.getResponse().getContentAsString();
         TodoItem todoItem = JSONObject.parseObject(contentAsString, TodoItem.class);
-        //在更新
+        //update
         MvcResult mvcResult = this.mockMvc.perform(put("/todoItems?id={id}&status={status}",todoItem.getId(),1))
                .andExpect(status().isOk()).andReturn();
     }
 
     @Test
     public  void givenValidTodoItemId_whenDeleteTodoItem_thenSucceed() throws Exception{
-        //先创建一个todoItem
+        //create todoItem
         MvcResult addMvcResult = this.mockMvc.perform(post("/todoItems").contentType(MediaType.APPLICATION_JSON_VALUE).content(
                         "{\n" +
                                 "  \"eventName\":\"test_update\",\n" +
@@ -101,7 +101,8 @@ class TodoItemControllerIntegrationTest {
                 .andExpect(status().isOk()).andReturn();
         String contentAsString = addMvcResult.getResponse().getContentAsString();
         TodoItem todoItem = JSONObject.parseObject(contentAsString, TodoItem.class);
-        //删除
+
+        //delete
         MvcResult mvcResult = this.mockMvc.perform(delete("/todoItems/{id}", todoItem.getId()))
                 .andExpect(status().isOk()).andReturn();
     }

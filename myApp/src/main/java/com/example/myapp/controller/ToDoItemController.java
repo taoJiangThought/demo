@@ -25,16 +25,20 @@ public class ToDoItemController {
     }
 
     /**
-     *  - 创建待办事项
+     *  create todoItems
      */
      @PostMapping
     public TodoItemDto addTodoItem(@RequestBody @Valid TodoItemDto todoItemDto){
-       return toDoItemService.addTodoItem(todoItemDto);
+         Long id = todoItemDto.getId();
+         if (id != null){
+             throw  new IllegalArgumentException("creating todoItem,the id should be null ");
+         }
+         return toDoItemService.addTodoItem(todoItemDto);
      }
 
 
     /**
-     * - 更新一个待办事项到完成状态
+     * -  update todoItem to completed status
      */
     @PutMapping
     public TodoItemDto updateTodoItemStatus(@RequestParam(value = "id") Long id , @RequestParam("status") @Valid @Max(1) Integer status){
@@ -42,7 +46,7 @@ public class ToDoItemController {
     }
 
     /**
-     * - 删除一个待办事项
+     * - delete todoItem
      */
     @DeleteMapping("/{id}")
     public void deleteTodoItemById(@PathVariable long id){
@@ -50,8 +54,8 @@ public class ToDoItemController {
     }
 
     /**
-     *  - 创建待办事项
-     * - 获取所有的待办事项
+     *
+     *  get all todoItems
      */
     @GetMapping
     public List<TodoItemDto> getAllTodoItem(){
