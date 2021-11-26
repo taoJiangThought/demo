@@ -15,6 +15,9 @@
  3.- 更新一个待办事项到完成状态
  4.- 删除一个待办事项
  ```
+#### 项目环境
+   jdk1.8 + gradle + springboot + docker + docker compose + postgresql
+
 #### 项目整合
 ```
    1.整合单元测试，通过Junit5 、mokito
