@@ -1,9 +1,9 @@
 
 ### 项目本地构建启动
 ```
-#### 1.本地已经安装docker、docker compose
-#### 2. 访问https://github.com/taoJiangThought/demo.git，下载项目
-#### 3.cd myApp 目录执行 docker-compose up 构建并启动项目
+ 1.本地已经安装docker、docker compose
+ 2. 访问https://github.com/taoJiangThought/demo.git，下载项目
+ 3.cd myApp 目录执行 docker-compose up 构建并启动项目
 ```
 ### 项目介绍
 
